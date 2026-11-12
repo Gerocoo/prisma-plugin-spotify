@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.2
+
+### Chore
+- Plugin updates are now checked against this repository.
+
 ## 1.1.1
 
 ### Fixes
