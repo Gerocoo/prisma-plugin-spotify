@@ -35,7 +35,7 @@ plugins {
 
 spotubePlugin {
     name = "Spotify"
-    version = "1.1.3"
+    version = "1.1.0"
     apiVersion = "0.1.0"
     description = "Spotify plugin for Spotube metadata fetching"
     author = "Sonic Liberation"
@@ -49,8 +49,8 @@ spotubePlugin {
     cookieDomains = listOf("spotify.com")
     license = "AGPL-3.0-or-later"
     contact = "sonic.liberation.69@gmail.com"
-    repository = "https://github.com/Gerocoo/spotube-plugin-spotify"
-    bugs = "https://github.com/Gerocoo/spotube-plugin-spotify/issues"
+    repository = "https://github.com/sonic-liberation/spotube-plugin-spotify"
+    bugs = "https://github.com/sonic-liberation/spotube-plugin-spotify/issues"
 }
 
 buildkonfig {

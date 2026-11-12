@@ -98,12 +98,7 @@ data class LibrarySavedTracksResponse(
 
     @Serializable
     data class Me(
-        val library: Library
-    )
-
-    @Serializable
-    data class Library(
-        val tracks: UserLibraryTrackPage
+        val library: UserLibraryTrackPage
     )
 }
 
