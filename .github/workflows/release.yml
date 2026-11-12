@@ -89,8 +89,8 @@ jobs:
         with:
           path: repo
 
-      - name: Backport legacy plugin
-        run: repo/scripts/backport-legacy-plugin.sh plugin-production.smplug plugin.smplug 0.2.2
+      - name: Prepare plugin
+        run: cp plugin-production.smplug plugin.smplug
 
       - name: Publish release
         env:
