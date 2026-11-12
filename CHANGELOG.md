@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.3
+
+### Fixes
+- Liked songs list was empty: read the tracks from `me.library.tracks` as Spotify returns them.
+
 ## 1.1.2
 
 ### Chore

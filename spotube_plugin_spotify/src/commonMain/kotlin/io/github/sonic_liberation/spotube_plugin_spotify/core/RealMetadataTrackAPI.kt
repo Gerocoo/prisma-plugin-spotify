@@ -48,7 +48,7 @@ class RealMetadataTrackAPI(val spotifyGQLClient: SpotifyGQLClient) : MetadataTra
             limit = paging.limit,
         ) ?: return PaginationResult(emptyList(), 0, null)
 
-        val page = response.data.me.library
+        val page = response.data.me.library.tracks
         val items = page.items.mapNotNull { it.toMetadataTrack() }
 
         return PaginationResult(
