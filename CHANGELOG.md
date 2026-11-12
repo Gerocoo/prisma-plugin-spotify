@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.1
+
+### Fixes
+- Liked songs now come from the account library instead of a fixed playlist, so the list matches the official Spotify app.
+
 ## 1.1.0
 
 ### Highlights

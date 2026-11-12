@@ -43,27 +43,18 @@ class RealMetadataTrackAPI(val spotifyGQLClient: SpotifyGQLClient) : MetadataTra
 
     override suspend fun savedTracks(pagination: PaginationStrategy?): PaginationResult<MetadataTrack> {
         val paging = pagination.getOffsetOrDefault()
-        val response = spotifyGQLClient.playlist.fetchPlaylist(
-            uri = "spotify:playlist:37i9dQZF1F5p3rmiWPIYgZ",
+        val response = spotifyGQLClient.library.savedTracks(
             offset = paging.offset,
             limit = paging.limit,
         ) ?: return PaginationResult(emptyList(), 0, null)
 
-        val playlist = response.data.playlistV2
-        val items =
-            playlist.content?.items?.mapNotNull {
-                it.itemV2?.takeIf { itemV2 ->
-                    // Some items in the playlist can be episodes or other non-track items, we need to filter them out
-                    itemV2.__typename == "TrackResponseWrapper" && itemV2.data != null
-                            && itemV2.data?.__typename == "Track"
-                }?.data?.toMetadataTrack()
-            }.orEmpty()
-        val totalCount = playlist.content?.totalCount ?: 0
+        val page = response.data.me.library
+        val items = page.items.mapNotNull { it.toMetadataTrack() }
 
         return PaginationResult(
             items = items,
-            totalCount = totalCount,
-            nextPagination = paging.nextOffset(items.size),
+            totalCount = page.totalCount,
+            nextPagination = paging.nextOffset(page.items.size),
         )
     }
 
