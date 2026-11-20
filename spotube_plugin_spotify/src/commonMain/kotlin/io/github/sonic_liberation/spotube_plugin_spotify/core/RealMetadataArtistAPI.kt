@@ -254,6 +254,8 @@ class RealMetadataArtistAPI(val spotifyGQLClient: SpotifyGQLClient) : MetadataAr
                 genres = emptyList(),
                 biography = null,
                 followersCount = null,
+                monthlyListeners = null,
+                worldRank = null,
             )
         }
 
@@ -304,6 +306,8 @@ class RealMetadataArtistAPI(val spotifyGQLClient: SpotifyGQLClient) : MetadataAr
             genres = emptyList(),
             biography = profile?.biography?.text,
             followersCount = stats?.followers,
+            monthlyListeners = stats?.monthlyListeners,
+            worldRank = stats?.worldRank,
         )
     }
 

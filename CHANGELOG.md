@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.2.0
+
+### Features
+- Expose the artist's monthly listeners and global popularity rank (`worldRank`) via `MetadataArtist.Detailed`, mapped from `queryArtistOverview`'s `stats` block. Requires `plugin_interfaces` 0.2.0.
+
+### Chore
+- Bump plugin version to 1.2.0 and `plugin_interfaces` dependency to 0.2.0.
+
 ## 1.1.0
 
 ### Highlights

@@ -35,7 +35,7 @@ plugins {
 
 spotubePlugin {
     name = "Spotify"
-    version = "1.1.0"
+    version = "1.2.0"
     apiVersion = "0.1.0"
     description = "Spotify plugin for Spotube metadata fetching"
     author = "Sonic Liberation"

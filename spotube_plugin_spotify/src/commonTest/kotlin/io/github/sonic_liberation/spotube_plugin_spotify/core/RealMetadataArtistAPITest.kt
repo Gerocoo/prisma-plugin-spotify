@@ -72,6 +72,8 @@ class RealMetadataArtistAPITest {
         assertEquals(artistId, result.id, "Expected artist ID to match")
         assertEquals("Justin Bieber", result.name, "Expected artist name to match")
         assertTrue(result.thumbnails.isNotEmpty(), "Expected at least one thumbnail")
+        assertEquals(38184134, result.monthlyListeners, "Expected monthly listeners to match fixture")
+        assertEquals(130, result.worldRank, "Expected world rank to match fixture")
     }
 
     @Test

@@ -159,6 +159,8 @@ data class ArtistVisuals(
 data class ArtistStats(
     val followers: Int? = null,
     val monthlyListeners: Int? = null,
+    // Spotify's global popularity rank for the artist (lower is more popular).
+    val worldRank: Int? = null,
 )
 
 @Serializable
