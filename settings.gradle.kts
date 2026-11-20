@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-rootProject.name = "spotube-plugin-spotify"
+rootProject.name = "prisma-plugin-spotify"
 
 pluginManagement {
     repositories {

@@ -71,7 +71,7 @@ class RealCoreAPI(
             url("https://api.github.com/repos/$GITHUB_REPO/releases/latest")
             headers {
                 append("Accept", "application/vnd.github+json")
-                append("User-Agent", "spotube-plugin-spotify")
+                append("User-Agent", "prisma-plugin-spotify")
             }
         }
         if (response.statusCode != 200) {

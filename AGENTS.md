@@ -1,4 +1,6 @@
-# spotube-plugin-spotify
+# prisma-plugin-spotify
+
+> Fork di [sonic-liberation/spotube-plugin-spotify](https://github.com/sonic-liberation/spotube-plugin-spotify), mantenuto in [Gerocoo/prisma-plugin-spotify](https://github.com/Gerocoo/prisma-plugin-spotify).
 
 ## Build & Test
 
