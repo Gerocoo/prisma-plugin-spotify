@@ -42,9 +42,10 @@ spotubePlugin {
     capabilities = listOf(
         PluginCapability.NETWORK_REQUESTS,
         PluginCapability.PERSISTENT_STORAGE,
-        PluginCapability.WEBVIEW
+        PluginCapability.WEBVIEW,
+        PluginCapability.WEBSOCKET
     )
-    abilities = listOf(PluginAbility.METADATA)
+    abilities = listOf(PluginAbility.METADATA, PluginAbility.DEVICE_CONTROL)
     // getCookies("https://spotify.com") after login on accounts.spotify.com
     cookieDomains = listOf("spotify.com")
     license = "AGPL-3.0-or-later"

@@ -34,10 +34,14 @@ import org.spotube.plugin_interfaces.host_apis.PersistedStorageAPI
 import org.spotube.plugin_interfaces.host_apis.PersistedStorageAPI_SERVICE_NAME
 import org.spotube.plugin_interfaces.host_apis.SystemInformationAPI
 import org.spotube.plugin_interfaces.host_apis.SystemInformationAPI_SERVICE_NAME
+import org.spotube.plugin_interfaces.host_apis.WebSocketAPI
+import org.spotube.plugin_interfaces.host_apis.WebSocketAPI_SERVICE_NAME
 import org.spotube.plugin_interfaces.host_apis.WebViewAPI
 import org.spotube.plugin_interfaces.host_apis.WebViewAPI_SERVICE_NAME
 import org.spotube.plugin_interfaces.plugin_apis.core.CoreAPI
 import org.spotube.plugin_interfaces.plugin_apis.core.CoreAPI_SERVICE_NAME
+import org.spotube.plugin_interfaces.plugin_apis.device_control.DeviceControlAPI
+import org.spotube.plugin_interfaces.plugin_apis.device_control.DeviceControlAPI_SERVICE_NAME
 import org.spotube.plugin_interfaces.plugin_apis.metadata.album.MetadataAlbumAPI
 import org.spotube.plugin_interfaces.plugin_apis.metadata.album.MetadataAlbumAPI_SERVICE_NAME
 import org.spotube.plugin_interfaces.plugin_apis.metadata.artist.MetadataArtistAPI
@@ -54,6 +58,7 @@ import org.spotube.plugin_interfaces.plugin_apis.metadata.user.MetadataUserAPI
 import org.spotube.plugin_interfaces.plugin_apis.metadata.user.MetadataUserAPI_SERVICE_NAME
 import io.github.sonic_liberation.spotify_gql_client.gql.SpotifyGQLClient
 import io.github.sonic_liberation.spotube_plugin_spotify.core.RealCoreAPI
+import io.github.sonic_liberation.spotube_plugin_spotify.core.RealDeviceControlAPI
 import io.github.sonic_liberation.spotube_plugin_spotify.services.TOTP
 
 private val zipline by lazy { Zipline.get() }
@@ -67,6 +72,7 @@ fun main() {
         val storage = zipline.take<PersistedStorageAPI>(PersistedStorageAPI_SERVICE_NAME)
         val crypto = zipline.take<CryptoAPI>(CryptoAPI_SERVICE_NAME)
         val systemInfo = zipline.take<SystemInformationAPI>(SystemInformationAPI_SERVICE_NAME)
+        val webSocket = zipline.take<WebSocketAPI>(WebSocketAPI_SERVICE_NAME)
 
         val totpGenerator = TOTP(crypto)
 
@@ -108,6 +114,10 @@ fun main() {
         zipline.bind<MetadataUserAPI>(
             MetadataUserAPI_SERVICE_NAME,
             RealMetadataUserAPI(spotifyGQLClient)
+        )
+        zipline.bind<DeviceControlAPI>(
+            DeviceControlAPI_SERVICE_NAME,
+            RealDeviceControlAPI(httpClient, webSocket, storage)
         )
     }
 }
