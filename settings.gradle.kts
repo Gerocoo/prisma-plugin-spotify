@@ -36,7 +36,7 @@ pluginManagement {
 dependencyResolutionManagement {
     repositories {
         google {
-            content { 
+            content {
               	includeGroupByRegex("com\\.android.*")
               	includeGroupByRegex("com\\.google.*")
               	includeGroupByRegex("androidx.*")
@@ -45,6 +45,13 @@ dependencyResolutionManagement {
         }
         mavenCentral()
         mavenLocal()
+        // Temporaneo: finché plugin_interfaces non viene ripubblicato su Maven Central
+        // sotto un gruppo di proprietà del fork, lo si prende da JitPack, che lo
+        // costruisce direttamente dal commit del repo Prisma.
+        maven {
+            url = uri("https://jitpack.io")
+            content { includeGroup("com.github.Gerocoo.Prisma") }
+        }
     }
 }
 include(":spotube_plugin_spotify")
