@@ -43,9 +43,8 @@ spotubePlugin {
         PluginCapability.NETWORK_REQUESTS,
         PluginCapability.PERSISTENT_STORAGE,
         PluginCapability.WEBVIEW,
-        PluginCapability.WEBSOCKET
     )
-    abilities = listOf(PluginAbility.METADATA, PluginAbility.DEVICE_CONTROL)
+    abilities = listOf(PluginAbility.METADATA)
     // getCookies("https://spotify.com") after login on accounts.spotify.com
     cookieDomains = listOf("spotify.com")
     license = "AGPL-3.0-or-later"
@@ -53,6 +52,44 @@ spotubePlugin {
     repository = "https://github.com/sonic-liberation/spotube-plugin-spotify"
     bugs = "https://github.com/sonic-liberation/spotube-plugin-spotify/issues"
 }
+
+// The published team-spotube/gradle-plugin (spotubePlugin DSL above) doesn't know about
+// "websocket" or "device_control" yet - its PluginCapability/PluginAbility enums are a fixed
+// external dependency, not something this repo controls. The app itself already understands
+// both values (they're a separate, matching enum in composeApp's own PluginModels.kt), so this
+// task patches them into the generated plugin.json after the DSL writes it, before it gets
+// zipped into the .smplug. Needed for the Spotify Connect / Canvas device-control support.
+val patchPluginJsonForDeviceControl = tasks.register("patchPluginJsonForDeviceControl") {
+    group = "distribution"
+    description = "Adds \"websocket\"/\"device_control\" to the generated plugin.json."
+    dependsOn("generatePluginJson")
+    val jsonFile = layout.buildDirectory.file("generated/plugin.json")
+    inputs.file(jsonFile)
+    outputs.file(jsonFile)
+    doLast {
+        val file = jsonFile.get().asFile
+        if (!file.exists()) return@doLast
+        var text = file.readText()
+        if (!text.contains("\"websocket\"")) {
+            text = Regex("(\"capabilities\"\\s*:\\s*\\[)([^\\]]*)(\\])", RegexOption.DOT_MATCHES_ALL)
+                .replace(text) { m ->
+                    val body = m.groupValues[2].trimEnd().trimEnd(',')
+                    "${m.groupValues[1]}$body,\n        \"websocket\"\n    ${m.groupValues[3]}"
+                }
+        }
+        if (!text.contains("\"device_control\"")) {
+            text = Regex("(\"abilities\"\\s*:\\s*\\[)([^\\]]*)(\\])", RegexOption.DOT_MATCHES_ALL)
+                .replace(text) { m ->
+                    val body = m.groupValues[2].trimEnd().trimEnd(',')
+                    "${m.groupValues[1]}$body,\n        \"device_control\"\n    ${m.groupValues[3]}"
+                }
+        }
+        file.writeText(text)
+    }
+}
+
+tasks.matching { it.name == "packageDevelopmentPlugin" || it.name == "packageProductionPlugin" }
+    .configureEach { dependsOn(patchPluginJsonForDeviceControl) }
 
 buildkonfig {
     val localProperties = Properties().apply {
